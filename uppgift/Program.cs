@@ -1,34 +1,104 @@
 ﻿
-using System.Reflection;
 
 Random rand = new Random();
+double balance = 100; 
 
-Console.Write("Enter a number (0-36): ");
-
-
+Console.WriteLine("Welcome to Roulette!");
+Console.WriteLine("You start with $" + balance);
 
 while (true)
 {
+    Console.WriteLine("Current balance: $" + balance);
 
-int winning = rand.Next(0, 37);
-int guess = Convert.ToInt32(Console.ReadLine());
-    if (guess < 0)
+    
+    Console.Write("Do you want to bet on 'number' or 'color'? ");
+    string choice;
+    while (true)
     {
-        Console.WriteLine("I SAID 0-36!");
+        choice = Console.ReadLine().Trim().ToLower();
+        if (choice == "number" || choice == "color")
+        {
+           break;
+        } 
+        else 
+        { 
+            Console.WriteLine("Wrong choice. Please type 'number' or 'color'.");
+            
+        }
     }
-    else if (guess > 36)
-        Console.WriteLine("I SAID 0-36!");
+    
+       
+    
+    
+    Console.Write("Enter your bet amount: $");
+    double betAmount = Convert.ToDouble(Console.ReadLine());
 
-if (guess == winning)
+    if (betAmount > balance || betAmount <= 0)
     {
-        Console.WriteLine("You Won!");
+        Console.WriteLine("wrong bet amount. Try again.");
+        
+    }
+
+    Console.Clear();
+    int winningNumber = rand.Next(0, 37);
+    string winningColor = (winningNumber == 0) ? "green" : (winningNumber % 2 == 0 ? "black" : "red");
+
+    if (choice == "number")
+    {
+        Console.Write("Pick a number (0-36): ");
+        int playerNumber = Convert.ToInt32(Console.ReadLine());
+
+        if (playerNumber == winningNumber)
+        {
+            double winnings = betAmount * 35;
+            balance += winnings;
+            Console.WriteLine("You win! Number was " + winningNumber + " (" + winningColor + ")");
+            Console.WriteLine("You won $" + winnings + "! Current balance: $" + balance);
+        }
+        else
+        {
+            balance -= betAmount;
+            Console.WriteLine("You lose! Number was " + winningNumber + " (" + winningColor + ")");
+            Console.WriteLine("Lost $" + betAmount + ". Current balance: $" + balance);
+        }
+    }
+    else if (choice == "color")
+    {
+        Console.Write("Pick a color (red/black): ");
+        string playerColor = Console.ReadLine().Trim().ToLower();
+
+        if (playerColor == winningColor)
+        {
+            double winnings = betAmount * 2; 
+            balance += winnings;
+            Console.WriteLine("You win! Number was " + winningNumber + " (" + winningColor + ")");
+            Console.WriteLine("You won $" + winnings + "! Current balance: $" + balance);
+        }
+        else
+        {
+            balance -= betAmount;
+            Console.WriteLine("You lose! Number was " + winningNumber + " (" + winningColor + ")");
+            Console.WriteLine("Lost $" + betAmount + ". Current balance: $" + balance);
+        }
     }
     else
     {
-        Console.WriteLine("You Lost, try again");
+        Console.WriteLine("wrong choice. Type 'number' or 'color'.");
+        
     }
-    
+
+  
+    if (balance <= 0)
+    {
+        Console.WriteLine("You have no money left! Game over.");
+        
+    }
+
+    Console.Write("Do you want to play again? (yes/no): ");
+    string again = Console.ReadLine().Trim().ToLower();
+    if (again == "no")
+    {
+        Console.WriteLine("Thanks for playing! Final balance: $" + balance);
+        
+    }
 }
-
-
-
