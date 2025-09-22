@@ -26,19 +26,24 @@ while (true)
             
         }
     }
-    
-       
-    
-    
-    Console.Write("Enter your bet amount: $");
-    double betAmount = Convert.ToDouble(Console.ReadLine());
 
-    if (betAmount > balance || betAmount <= 0)
+ 
+    double betAmount;
+
+    while (true) 
     {
-        Console.WriteLine("wrong bet amount. Try again.");
-        
-    }
 
+        {
+            Console.Write("Enter your bet amount: $");
+            betAmount = Convert.ToDouble(Console.ReadLine());
+            if (betAmount > 0 && betAmount <= balance)
+                break;
+            Console.WriteLine("Wrong bet amount. Try again.");
+        }
+
+    }
+    
+    
     Console.Clear();
     int winningNumber = rand.Next(0, 37);
     string winningColor = (winningNumber == 0) ? "green" : (winningNumber % 2 == 0 ? "black" : "red");
@@ -99,6 +104,6 @@ while (true)
     if (again == "no")
     {
         Console.WriteLine("Thanks for playing! Final balance: $" + balance);
-        
+        break;
     }
 }
