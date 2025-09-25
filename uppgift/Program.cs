@@ -35,9 +35,9 @@ while (true)
 
         {
             Console.Write("Enter your bet amount: $");
-            betAmount = Convert.ToDouble(Console.ReadLine());
-            if (betAmount > 0 && betAmount <= balance)
-                break;
+            if (double.TryParse(Console.ReadLine(), out betAmount) &&
+            betAmount > 0 && betAmount <= balance)
+                    break;
             Console.WriteLine("Wrong bet amount. Try again.");
         }
 
@@ -50,8 +50,15 @@ while (true)
 
     if (choice == "number")
     {
-        Console.Write("Pick a number (0-36): ");
-        int playerNumber = Convert.ToInt32(Console.ReadLine());
+        int playerNumber;
+        while (true)
+        {
+            Console.Write("Pick a number (0-36): ");
+            if (int.TryParse(Console.ReadLine(), out playerNumber) &&
+                playerNumber >= 0 && playerNumber <= 36)
+                break;
+            Console.WriteLine("Invalid number. Try again.");
+        }
 
         if (playerNumber == winningNumber)
         {
@@ -69,8 +76,22 @@ while (true)
     }
     else if (choice == "color")
     {
-        Console.Write("Pick a color (red/black): ");
-        string playerColor = Console.ReadLine().Trim().ToLower();
+        string playerColor; 
+        while (true)
+        {
+            Console.Write("Pick a color (red/black): ");
+            playerColor = Console.ReadLine().Trim().ToLower();
+            if (playerColor == "red" || playerColor == "black")
+                break;
+            else
+            {
+                Console.WriteLine("Invalid choice. Type 'red' or 'black'.");
+            }
+        }
+
+
+
+
 
         if (playerColor == winningColor)
         {
@@ -96,14 +117,23 @@ while (true)
     if (balance <= 0)
     {
         Console.WriteLine("You have no money left! Game over.");
-        
+        break;
     }
 
-    Console.Write("Do you want to play again? (yes/no): ");
-    string again = Console.ReadLine().Trim().ToLower();
+    string again;
+    while (true)
+    {
+        Console.Write("Do you want to play again? (yes/no): ");
+        again = Console.ReadLine().Trim().ToLower();
+        if (again == "yes" || again == "no")
+            break;
+        Console.WriteLine("Please type 'yes' or 'no'.");
+    }
     if (again == "no")
     {
         Console.WriteLine("Thanks for playing! Final balance: $" + balance);
         break;
     }
+
+
 }
