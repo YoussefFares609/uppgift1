@@ -116,7 +116,7 @@ while (true)
   
     if (balance <= 0)
     {
-        Console.WriteLine("You have no money left! Game over.");
+        Console.WriteLine("You have no money left! Game over. BYE BYEEEE");
         break;
     }
 
